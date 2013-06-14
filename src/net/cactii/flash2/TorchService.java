@@ -106,11 +106,15 @@ public class TorchService extends Service {
         mNotificationBuilder.setSmallIcon(R.drawable.notification_icon);
         mNotificationBuilder.setTicker(getString(R.string.not_torch_title));
         mNotificationBuilder.setContentTitle(getString(R.string.not_torch_title));
-        mNotificationBuilder.setContentText(getString(R.string.not_torch_summary));
         mNotificationBuilder.setContentIntent(PendingIntent.getActivity(this, 0, new Intent(this,
                 MainActivity.class), 0));
         mNotificationBuilder.setAutoCancel(false);
         mNotificationBuilder.setOngoing(true);
+
+        PendingIntent turnOff = PendingIntent.getBroadcast(this, 0,
+                new Intent(TorchSwitch.TOGGLE_FLASHLIGHT), 0);
+        mNotificationBuilder.addAction(R.drawable.ic_appwidget_torch_off,
+                getString(R.string.not_torch_toggle), turnOff);
 
         mNotification = mNotificationBuilder.getNotification();
         mNotificationManager.notify(getString(R.string.app_name).hashCode(), mNotification);
